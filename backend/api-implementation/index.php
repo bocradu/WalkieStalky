@@ -21,7 +21,7 @@ $app->PUT('/persons/{personid}', function($request, $response, $args) {
             $authtoken = $queryParams['authtoken'];    
             
             $body = $request->getParsedBody();
-            $response->write('How about implementing putperson as a PUT method ?');
+            $response->write('Deployment Test + How about implementing putperson as a PUT method ?');
             return $response;
             });
 
