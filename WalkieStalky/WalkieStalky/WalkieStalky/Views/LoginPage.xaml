@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:WalkieStalky.ViewModels;assembly=WalkieStalky"
+             x:Class="WalkieStalky.Views.LoginPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="LoginButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#2A49A5" />
+        <Setter Property="BorderRadius" Value="3"></Setter>
+        <Setter Property="BorderColor" Value="#082783"></Setter>
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+      </Style>
+    </ResourceDictionary>
+
+  </ContentPage.Resources>
+  <Grid HorizontalOptions="Center"
+         VerticalOptions="Center">
+    <Grid.BindingContext>
+      <viewModels:LogInViewModel />
+    </Grid.BindingContext>
+
+    <Button Command="{Binding LogInCommand}"
+            Style="{StaticResource LoginButtonStyle}"
+            Text="{Binding LogInText}"></Button>
+  </Grid>
+</ContentPage>

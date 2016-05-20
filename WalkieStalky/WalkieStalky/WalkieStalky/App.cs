@@ -1,35 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using WalkieStalky.Services;
+using WalkieStalky.Views;
 using Xamarin.Forms;
 
 namespace WalkieStalky
 {
+    public interface IAllert
+    {
+        void Throw();
+    }
     public class App : Application
     {
-        public App()
+        public App(Services.Services services)
         {
-            // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                         new Label {
-                             HorizontalTextAlignment = TextAlignment.Center,
-                             Text = "Welcome to Xamarin Forms!"
-                         }
-                     }
-                }
-            };
+            services.LoginService.OnLogin += OnLogin;
+           Services.Services.SetInstance(services);
+            
+            MainPage = new LoginPage();
+        }
+
+        private void OnLogin(object sender, OnLoginEventArgs args)
+        {
+            
         }
 
         protected override void OnStart()
         {
             // Handle when your app starts
+           // _alertService.Throw();
         }
 
         protected override void OnSleep()
@@ -41,5 +38,7 @@ namespace WalkieStalky
         {
             // Handle when your app resumes
         }
+
+        
     }
 }
