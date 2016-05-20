@@ -1,0 +1,117 @@
+swagger: '2.0'
+info:
+  title: Haufe WalkieStalky 
+  
+  description: This is a simple REST API that enables the communication of our awesome WalkyStalky social application. 
+  contact:
+    name: elias weingaertner
+    email: elias.weingaertner@haufe-lexware.com
+  version: '1.0'
+host: walkiestalky.verspult.com
+basePath: /api
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /persons/{personid}:
+    put:
+      summary: Put a person record into the system, along with the topics he is interested. All user posts will be automatically removed again from the system after a timespan of 5 minutes. The service responds with all users that are close to the system.
+      operationId: putperson
+      parameters:
+        - name: personid
+          in: path
+          type: string
+          required: true
+        - name: authtoken
+          in: query
+          type: string
+          required: true
+        - name: personrecord
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/PersonRecord"
+          
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Putting the user with his topics was successful
+          schema:
+            $ref: "#/definitions/ClosePersonList"
+        405:
+          description: Not allowed or authorized
+      
+definitions:
+  PersonRecord:
+    type: "object"
+    properties:
+      publicId:
+        type: "string"
+        description: A public technical id we can use to connect to the user
+      name:
+        type: "string"
+        description: The name to display on other people's phones
+      phonenumber:
+        type: "string"
+        description: The phone number of the user
+      topics:
+        type: array
+        items: 
+          type: string
+      coordinates:
+        $ref: "#/definitions/GeoCoordinates"
+        
+        
+  GeoCoordinates:
+    description: This datatype encodes a GPS location using decimal degrees. See <a href="https://en.wikipedia.org/wiki/Decimal_degrees" target="_new">https://en.wikipedia.org/wiki/Decimal_degrees</a> for a description of this geo format<
+    properties:
+      longitude: 
+        type: number
+      latitude: 
+        type: number
+    
+      
+  ClosePersonList:
+    description: This datatype models a list of persons that are close to the user's geo coordinate specified in the person record of the request. In essence, this is a response type that models a list of persons, with additional information if the person was matched.
+    properties:
+      ClosePersons: 
+        type: array
+        items: 
+          $ref: "#/definitions/PersonRecord"
+      Match: 
+        $ref: "#/definitions/BestMatch"
+        
+        
+  BestMatch:
+    description: This user  best match of the requesting user.
+    properties:
+      matchedTopic:
+          type: string
+      bestMatchedPerson:
+          $ref: "#/definitions/PersonRecord"
+          
+          
+          
+     
+    
+    
+      
+  
+        
+          
+        
+  
+  
+        
+        
+       
+            
+
+
+    
