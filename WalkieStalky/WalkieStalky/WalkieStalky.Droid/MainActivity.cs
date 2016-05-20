@@ -28,9 +28,15 @@ namespace WalkieStalky.Droid
                 Constants.Scope,
                 new Uri(Constants.AuthorizeUrl),
                 new Uri(Constants.RedirectUrl));
-            auth.Completed += Auth_Completed; ;
+            auth.Completed += Auth_Completed;
+            auth.Error += AuthOnError; ;
             var intent = auth.GetUI(this);
             StartActivity(intent);
+        }
+
+        private void AuthOnError(object sender, AuthenticatorErrorEventArgs authenticatorErrorEventArgs)
+        {
+            OnFail?.Invoke(sender, new OnFailEventArgs { Error = authenticatorErrorEventArgs.Message });
         }
 
         private void Auth_Completed(object sender, AuthenticatorCompletedEventArgs e)
@@ -39,6 +45,7 @@ namespace WalkieStalky.Droid
         }
 
         public event OnLoginEvent OnLogin;
+        public event OnFailEvent OnFail;
     }
 
 

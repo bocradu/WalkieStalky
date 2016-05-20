@@ -22,6 +22,14 @@ namespace WalkieStalky.Services
     {
         void LogIn();
         event OnLoginEvent OnLogin;
+        event OnFailEvent OnFail;
+    }
+
+    public delegate void OnFailEvent(object sender, OnFailEventArgs args);
+
+    public class OnFailEventArgs
+    {
+        public string Error { get; set; }
     }
 
     public delegate void OnLoginEvent(object sender, OnLoginEventArgs args);

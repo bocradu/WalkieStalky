@@ -1,3 +1,4 @@
+using System;
 using WalkieStalky.Services;
 using WalkieStalky.Views;
 using Xamarin.Forms;
@@ -13,9 +14,15 @@ namespace WalkieStalky
         public App(Services.Services services)
         {
             services.LoginService.OnLogin += OnLogin;
-           Services.Services.SetInstance(services);
+            services.LoginService.OnFail += LoginServiceOnOnFail;
+            Services.Services.SetInstance(services);
             
             MainPage = new LoginPage();
+        }
+
+        private void LoginServiceOnOnFail(object sender, OnFailEventArgs args)
+        {
+            
         }
 
         private void OnLogin(object sender, OnLoginEventArgs args)
