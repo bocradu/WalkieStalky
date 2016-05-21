@@ -8,12 +8,22 @@ namespace WalkieStalky.ViewModels
 {
     public class LogInViewModel : BaseViewModel
     {
+        private bool _stayLoggedIn;
+
         public LogInViewModel()
         {
             LogInCommand = new LogInCommand();
         }
         public ICommand LogInCommand { get; set; }
-
+        public bool StayLoggedIn
+        {
+            get { return _stayLoggedIn; }
+            set
+            {
+                _stayLoggedIn = value;
+                OnPropertyChanged();
+            }
+        }
         public string LogInText => "Log in with Facebook";
     }
 
@@ -26,7 +36,7 @@ namespace WalkieStalky.ViewModels
 
         public void Execute(object parameter)
         {
-            Services.Services.GetInstance().LoginService.LogIn();
+            Services.Services.GetInstance().LoginService.LogIn((bool)parameter);
         }
 
         public event EventHandler CanExecuteChanged;

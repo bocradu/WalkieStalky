@@ -40,6 +40,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\walkiestalkyclient.cs" />
     <Compile Include="Services\Services.cs" />
+    <Compile Include="ViewModels\MapPageViewModel.cs" />
+    <Compile Include="ViewModels\TopicsCommand.cs" />
     <Compile Include="ViewModels\TopicsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LogInViewModel.cs" />
@@ -47,6 +49,7 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NavigationService.cs" />
     <Compile Include="Views\TopicsPage.xaml.cs">
       <DependentUpon>TopicsPage.xaml</DependentUpon>
     </Compile>

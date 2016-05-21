@@ -12,14 +12,23 @@ namespace WalkieStalky.Views
 {
     public partial class MapPage : ContentPage
     {
+        public bool Initialized { get; set; }
         public MapPage()
         {
             InitializeComponent();
-
-            GetCurrentLocation();
+            Initialized = false;
         }
 
-
+        protected override void OnAppearing()
+        {
+           
+            base.OnAppearing();
+        }
+        public void Initialize()
+        {
+            Initialized = true;
+            GetCurrentLocation();
+        }
         void GetCurrentLocation()
         {
             var locator = CrossGeolocator.Current;
@@ -35,7 +44,6 @@ namespace WalkieStalky.Views
                new Position(e.Position.Latitude, e.Position.Longitude), Distance.FromMiles(0.3));
 
             MyMap.MoveToRegion(mapSpan);
-           ;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WalkieStalky.ViewModels;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace WalkieStalky.Views

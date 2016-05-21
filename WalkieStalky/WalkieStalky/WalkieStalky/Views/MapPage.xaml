@@ -2,7 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             x:Class="WalkieStalky.Views.MapPage">
+             xmlns:local="clr-namespace:WalkieStalky;assembly=WalkieStalky"
+             x:Class="WalkieStalky.Views.MapPage"
+             BindingContext="{x:Static local:App.MapPageViewModel}">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="LoginButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#2A49A5" />
+        <Setter Property="BorderRadius" Value="3"></Setter>
+        <Setter Property="BorderColor" Value="#082783"></Setter>
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+      </Style>
+
+    </ResourceDictionary>
+
+  </ContentPage.Resources>
   <StackLayout Spacing="0">
     <maps:Map WidthRequest="960" HeightRequest="100"
         x:Name="MyMap"
@@ -10,6 +25,9 @@
         MapType="Street"
         VerticalOptions="FillAndExpand"
         />
-    <Button Text="Back"></Button>
+    <Button Command="{Binding TopicsCommand}"
+            CommandParameter="{Binding NavigationService}"
+           Style="{StaticResource LoginButtonStyle}"
+               Text="To topics"/>
   </StackLayout>
 </ContentPage>

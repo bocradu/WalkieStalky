@@ -15,14 +15,23 @@
     </ResourceDictionary>
 
   </ContentPage.Resources>
-  <Grid HorizontalOptions="Center"
+  <StackLayout HorizontalOptions="Center"
          VerticalOptions="Center">
-    <Grid.BindingContext>
+    <StackLayout.BindingContext>
       <viewModels:LogInViewModel />
-    </Grid.BindingContext>
+    </StackLayout.BindingContext>
 
     <Button Command="{Binding LogInCommand}"
+            CommandParameter="{Binding StayLoggedIn}"
             Style="{StaticResource LoginButtonStyle}"
             Text="{Binding LogInText}"></Button>
-  </Grid>
+    <StackLayout Orientation="Vertical">
+      <Switch IsToggled="{Binding StayLoggedIn, Mode=TwoWay}" 
+              HorizontalOptions="Center"
+              VerticalOptions="Center"></Switch>
+      <Label  HorizontalOptions="Center"
+              VerticalOptions="Center"
+              Text="Stay logged in"/>
+    </StackLayout>
+  </StackLayout>
 </ContentPage>
