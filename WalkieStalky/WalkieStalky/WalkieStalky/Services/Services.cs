@@ -16,6 +16,13 @@ namespace WalkieStalky.Services
         private static Services _servicesInstance;
 
         public ILoginService LoginService { get; set; }
+        public IAccountService AccountService { get; set; }
+    }
+
+    public interface IAccountService
+    {
+        Account SaveAccount(Account account, string appName);
+        Account GetAccountFor(string appName);
     }
 
     public interface ILoginService

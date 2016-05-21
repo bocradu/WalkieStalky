@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Linq;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -12,13 +12,13 @@ using Xamarin.Auth;
 namespace WalkieStalky.Droid
 {
     [Activity(Label = "WalkieStalky.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(new Services.Services { LoginService = this }));
+            LoadApplication(new App(new Services.Services {LoginService = this, AccountService = this}));
         }
 
         public void LogIn()
@@ -46,6 +46,18 @@ namespace WalkieStalky.Droid
 
         public event OnLoginEvent OnLogin;
         public event OnFailEvent OnFail;
+        public Account SaveAccount(Account account, string appName)
+        {
+            AccountStore.Create(this).Save(account,appName);
+            return account;
+        }
+
+        public Account GetAccountFor(string appName)
+        {
+            var accounts = AccountStore.Create(this).FindAccountsForService(appName);
+            var account = accounts.FirstOrDefault();
+            return account;
+        }
     }
 
 
