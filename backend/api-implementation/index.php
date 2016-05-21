@@ -5,8 +5,11 @@
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
-require 'WalkieStalkyRedisDB.php';
-require './lib/Models/PersonIdRecord.php';
+require_once 'WalkieStalkyRedisDB.php';
+require_once  './lib/Models/PersonIdRecord.php';
+require_once './lib/Models/PersonRecord.php';
+require_once './lib/Models/ClosePersonList.php';
+
 
 $app = new Slim\App();
 
@@ -56,15 +59,83 @@ $app->PUT('/persons/{personid}', function($request, $response, $args) {
             $queryParams = $request->getQueryParams();
             $authtoken = $queryParams['authtoken'];       
 	    
+	    //dummy authorization
+
             if (empty($authtoken)) {
                 return $response->withStatus(400)->write('Bad Request - no Authtoken specified');
 	    }
 
+            //parse request body		
+            $parsedBody = $request->getParsedBody();
+            //var_dump($parsedBody);
+	    
+	    $personRecord = new SwaggerServer\lib\Models\PersonRecord();
+	    
+            
+            
+            $personRecord->personId = $parsedBody["personId"];
+	    $personRecord->name=$parsedBody["name"];
+	    $personRecord->phonenumber=$parsedBody["phonenumber"];
+	    $personRecord->topics = $parsedBody["topics"];
+            $personRecord->coordinates = $parsedBody["coordinates"];
 
-            $body = $request->getParsedBody();
-            var_dump($body);
-            $response->write('How about implementing putperson as a PUT method ?');
-            return $response;
+            //$dummyResponse = json_encode($personRecord);
+	    //$response->write($dummyResponse);
+			 
+            $WalkieStalkyRedisDB = new WalkieStalkyRedisDB();
+            $WalkieStalkyRedisDB->updateGeoLocation($personRecord);
+            //store our new person Record in the Database
+            $WalkieStalkyRedisDB->updatePersonRecord($personRecord);
+            
+            //getListOfPeopleThatAreClose :-D (radius 1000m)
+            $closePersonIds = $WalkieStalkyRedisDB->getClosePersons($personRecord,1000);
+            //var_dump($result);  
+ 	    //assemble close person list
+	    $cpl = array();
+	    
+	    $matchscore=0;
+	    $matchedRecord = NULL;		    
+	    foreach ($closePersonIds as $cid) {
+	
+		$closePersonJSON = $WalkieStalkyRedisDB->getPersonRecordJSON($cid);
+		$p = json_decode($closePersonJSON, true);
+		$pr = null;
+		$pr = new SwaggerServer\lib\Models\PersonRecord();
+		$pr->personId=$p["personId"];
+	        if (strcmp($pr->personId,$personRecord->personId)!=0) {	
+			$pr->name=$p["name"];
+			$pr->phonenumber=$p["phonenumber"];
+			$pr->topics = $p["topics"];
+		
+			//now we see if there's a topic match
+			$tempscore = 0;
+			$uts = $pr->topics;
+			$mts = $personRecord->topics;
+			foreach ($uts as $userTopic) {
+		  		foreach($mts as $myTopic) {	
+				if (strcmp($myTopic,$userTopic)==0) {
+					$tempscore = $tempscore+1;
+				}
+                  		}			
+			}
+			//echo $pr->name. " " . $personRecord->name." ".strval($tempscore);		
+			if ($tempscore>$matchscore) {
+				$matchscore=$tempscore;
+				$matchedRecord=$pr;
+			}	
+
+			$pr->coordinates = $p["coordinates"];
+			array_push($cpl,$pr);	
+		}	
+	    }
+			    
+	    $closePersonList = new SwaggerServer\lib\Models\ClosePersonList(); 
+	    //var_dump($closePersonList);
+	    $closePersonList->closePersons=$cpl;
+ 	    $closePersonList->match=$matchedRecord;
+	    
+	    $response->write(json_encode($closePersonList,JSON_PRETTY_PRINT));
+            	
             });
 
 
