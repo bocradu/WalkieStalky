@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace WalkieStalky.Views
 {
-    public partial class LoginPage :ContentPage
+    public partial class MapPage : ContentPage
     {
-        public LoginPage()
+        public MapPage()
         {
             InitializeComponent();
         }

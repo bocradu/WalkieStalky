@@ -6,10 +6,6 @@ using Xamarin.Forms;
 
 namespace WalkieStalky
 {
-    public interface IAllert
-    {
-        void Throw();
-    }
     public class App : Application
     {
         private const string AppName = "WalkieStalky";
@@ -22,6 +18,7 @@ namespace WalkieStalky
             HttpService=new HttpService();
             MainPage = new LoginPage();
         }
+
         public IHttpService HttpService { get; set; }
         private void LoginServiceOnOnFail(object sender, OnFailEventArgs args)
         {
@@ -32,7 +29,7 @@ namespace WalkieStalky
         {
             HttpService.SendAuthenticationCredentials(args.Account);
             Services.Services.GetInstance().AccountService.SaveAccount(args.Account, AppName);
-            MainPage=new ContentPage();
+            MainPage=new MapPage();
         }
 
         protected override void OnStart()
@@ -40,7 +37,7 @@ namespace WalkieStalky
             var account=Services.Services.GetInstance().AccountService.GetAccountFor(AppName);
             if (account != null)
             {
-                MainPage=new ContentPage();
+                MainPage=new MapPage();
             }
         }
 
