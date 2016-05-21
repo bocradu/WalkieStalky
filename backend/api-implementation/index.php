@@ -55,9 +55,14 @@ $app->PUT('/persons/{personid}', function($request, $response, $args) {
             
             $queryParams = $request->getQueryParams();
             $authtoken = $queryParams['authtoken'];       
-	    		   	    
-	         
+	    
+            if (empty($authtoken)) {
+                return $response->withStatus(400)->write('Bad Request - no Authtoken specified');
+	    }
+
+
             $body = $request->getParsedBody();
+            var_dump($body);
             $response->write('How about implementing putperson as a PUT method ?');
             return $response;
             });
