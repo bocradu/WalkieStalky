@@ -7,13 +7,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Support.V7.App;
 using ImageCircle.Forms.Plugin.Droid;
 using WalkieStalky.Services;
 using Xamarin.Auth;
 
 namespace WalkieStalky.Droid
 {
-    [Activity(Label = "WalkieStalky.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "WalkieStalky.Droid", Icon = "@drawable/icon", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService, IVibrateService
     {
         private bool _stayLoggedIn;

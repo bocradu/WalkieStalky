@@ -22,7 +22,7 @@ namespace WalkieStalky
             Services.Services.SetInstance(services);
             HttpService=new HttpService();
             MainPage = new MatchPage();
-           
+
         }
 
         public IHttpService HttpService { get; set; }
