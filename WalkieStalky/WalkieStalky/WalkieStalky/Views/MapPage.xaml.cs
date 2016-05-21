@@ -19,15 +19,15 @@ namespace WalkieStalky.Views
             Initialized = false;
         }
 
-        protected override void OnAppearing()
-        {
-           
-            base.OnAppearing();
-        }
         public void Initialize()
         {
             Initialized = true;
             GetCurrentLocation();
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
         void GetCurrentLocation()
         {
