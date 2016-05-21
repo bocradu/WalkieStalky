@@ -18,6 +18,7 @@ class ComposerStaticInitbd1e80dcb36db4054b0a0bbd79cf3665
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
+            'Predis\\' => 7,
         ),
         'I' => 
         array (
@@ -37,6 +38,10 @@ class ComposerStaticInitbd1e80dcb36db4054b0a0bbd79cf3665
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
         ),
         'Interop\\Container\\' => 
         array (
