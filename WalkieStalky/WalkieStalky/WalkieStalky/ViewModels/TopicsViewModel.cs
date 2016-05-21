@@ -6,30 +6,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WalkieStalky.Views;
 using Xamarin.Forms;
 
 namespace WalkieStalky.ViewModels
 {
     public class TopicsViewModel : BaseViewModel
     {
-   
+        public NavigationService NavigationService { get; set; }
 
         public string AddTopicText => "New Topic";
 
-        public ICommand AddTopicCommand { get; set; }
+        public ICommand Explore { get; set; }
         public ObservableCollection<Topic> Topics { get; set; }
 
-        public TopicsViewModel()
+        public TopicsViewModel(NavigationService navi)
         {
+            NavigationService = navi;
             Topics = new ObservableCollection<Topic>(); 
             Topics.Add(new Topic { TopicName = "Tomato", Type = "Fruit", Image = "tomato.png" });
             Topics.Add(new Topic { TopicName = "Romaine Lettuce", Type = "Vegetable", Image = "lettuce.png" });
             Topics.Add(new Topic { TopicName = "Zucchini", Type = "Vegetable", Image = "zucchini.png" });
 
-            AddTopicCommand = new AddTopicCommand();
+            Explore = new ExploreCommand();
 
            
         }
+
     }
 
     public class Topic
@@ -39,7 +42,7 @@ namespace WalkieStalky.ViewModels
         public string Type { get;  set; }
     }
 
-    internal class AddTopicCommand : ICommand
+    internal class ExploreCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -48,9 +51,14 @@ namespace WalkieStalky.ViewModels
             return true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            //throw new NotImplementedException();
+            var navi = parameter as INavigation;
+            if(!App.MapPage.Initialized)
+            {
+                App.MapPage.Initialize();
+            }
+            await navi.PushAsync(App.MapPage);
         }
     }
 }

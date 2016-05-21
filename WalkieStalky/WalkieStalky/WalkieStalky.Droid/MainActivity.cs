@@ -1,29 +1,35 @@
 ﻿using System;
 using System.Linq;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using ImageCircle.Forms.Plugin.Droid;
 using WalkieStalky.Services;
 using Xamarin.Auth;
 
 namespace WalkieStalky.Droid
 {
     [Activity(Label = "WalkieStalky.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService, IVibrateService
     {
+        private bool _stayLoggedIn;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
-            LoadApplication(new App(new Services.Services {LoginService = this, AccountService = this}));
+            
+            LoadApplication(new App(new Services.Services {LoginService = this, AccountService = this,VibrateService = this}));
         }
 
-        public void LogIn()
+        public void LogIn(bool stayLoggedIn)
         {
+            _stayLoggedIn = stayLoggedIn;
             var auth = new OAuth2Authenticator(
                 Constants.ClientId,
                 Constants.Scope,
@@ -42,7 +48,7 @@ namespace WalkieStalky.Droid
 
         private void Auth_Completed(object sender, AuthenticatorCompletedEventArgs e)
         {
-            OnLogin?.Invoke(sender, new OnLoginEventArgs { Account = e.Account });
+            OnLogin?.Invoke(sender, new OnLoginEventArgs { Account = e.Account,StayLoggedIn= _stayLoggedIn });
         }
 
         public event OnLoginEvent OnLogin;
@@ -58,6 +64,12 @@ namespace WalkieStalky.Droid
             var accounts = AccountStore.Create(this).FindAccountsForService(appName);
             var account = accounts.FirstOrDefault();
             return account;
+        }
+
+        public void Alert()
+        {
+            Vibrator vibrator = (Vibrator)this.GetSystemService(Context.VibratorService);
+            vibrator.Vibrate(1000);
         }
     }
 

@@ -17,6 +17,12 @@ namespace WalkieStalky.Services
 
         public ILoginService LoginService { get; set; }
         public IAccountService AccountService { get; set; }
+        public IVibrateService VibrateService { get; set; }
+    }
+
+    public interface IVibrateService
+    {
+        void Alert();
     }
 
     public interface IAccountService
@@ -27,7 +33,7 @@ namespace WalkieStalky.Services
 
     public interface ILoginService
     {
-        void LogIn();
+        void LogIn(bool stayLoggedIn);
         event OnLoginEvent OnLogin;
         event OnFailEvent OnFail;
     }
@@ -44,5 +50,6 @@ namespace WalkieStalky.Services
     public class OnLoginEventArgs
     {
         public Account Account { get; set; }
+        public bool StayLoggedIn { get; set; }
     }
 }
