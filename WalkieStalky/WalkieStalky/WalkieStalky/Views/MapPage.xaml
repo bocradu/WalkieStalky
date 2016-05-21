@@ -10,5 +10,6 @@
         MapType="Street"
         VerticalOptions="FillAndExpand"
         />
+    <Button Text="Back"></Button>
   </StackLayout>
 </ContentPage>
