@@ -29,7 +29,7 @@ namespace WalkieStalky
         {
             HttpService.SendAuthenticationCredentials(args.Account);
             Services.Services.GetInstance().AccountService.SaveAccount(args.Account, AppName);
-            MainPage=new MapPage();
+           MainPage=new MapPage();
         }
 
         protected override void OnStart()
@@ -39,6 +39,7 @@ namespace WalkieStalky
             {
                 MainPage=new MapPage();
             }
+           
         }
 
         protected override void OnSleep()
