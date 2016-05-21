@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Linq;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using ImageCircle.Forms.Plugin.Droid;
 using WalkieStalky.Services;
 using Xamarin.Auth;
 
 namespace WalkieStalky.Droid
 {
     [Activity(Label = "WalkieStalky.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService, IVibrateService
     {
         private bool _stayLoggedIn;
 
@@ -21,7 +23,8 @@ namespace WalkieStalky.Droid
             base.OnCreate(bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
-            LoadApplication(new App(new Services.Services {LoginService = this, AccountService = this}));
+            
+            LoadApplication(new App(new Services.Services {LoginService = this, AccountService = this,VibrateService = this}));
         }
 
         public void LogIn(bool stayLoggedIn)
@@ -61,6 +64,12 @@ namespace WalkieStalky.Droid
             var accounts = AccountStore.Create(this).FindAccountsForService(appName);
             var account = accounts.FirstOrDefault();
             return account;
+        }
+
+        public void Alert()
+        {
+            Vibrator vibrator = (Vibrator)this.GetSystemService(Context.VibratorService);
+            vibrator.Vibrate(1000);
         }
     }
 

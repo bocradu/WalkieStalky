@@ -21,7 +21,8 @@ namespace WalkieStalky
             services.LoginService.OnFail += LoginServiceOnOnFail;
             Services.Services.SetInstance(services);
             HttpService=new HttpService();
-            MainPage = new LoginPage();
+            MainPage = new MatchPage();
+           
         }
 
         public IHttpService HttpService { get; set; }
