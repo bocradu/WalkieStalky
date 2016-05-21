@@ -46,12 +46,42 @@ paths:
             $ref: "#/definitions/ClosePersonList"
         405:
           description: Not allowed or authorized
+          
+  /persons/id:
+    get:
+      summary: get the personId corresponding to an AuthToken. If the Person is not already in the system, a new ID is returned and the authtoken is associated with that securityDefinitions
+      operationId: getPersonId
+      parameters:
+        - name: authtoken
+          in: query
+          type: string
+          required: true
+      responses:
+        200:
+          description: A personId was found and is returned to the client
+          schema:
+            $ref: "#/definitions/PersonIdRecord"
+        201: 
+          description: A new person is created and the token is authenticated with the personId
+          schema:
+            $ref: "#/definitions/PersonIdRecord"
+        403:
+          description: Not authorized
+          
+  /test:
+    get:
+      summary: A generic development test endpoint that certainly does voodoo. It is very dangerous and may attack anytime. We must deal with it.
+      operationId: test
+      responses:
+        200:
+          description: Funky debug output. Specificiation is entirely left blank
+      
       
 definitions:
   PersonRecord:
     type: "object"
     properties:
-      publicId:
+      personId:
         type: "string"
         description: A public technical id we can use to connect to the user
       name:
@@ -96,7 +126,12 @@ definitions:
       bestMatchedPerson:
           $ref: "#/definitions/PersonRecord"
           
-          
+  PersonIdRecord:
+    description: Describes a personId Record
+    properties:
+      personId:
+        type: string
+        
           
      
     
