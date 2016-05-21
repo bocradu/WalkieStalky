@@ -14,6 +14,8 @@ namespace WalkieStalky.Droid
     [Activity(Label = "WalkieStalky.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, ILoginService, IAccountService
     {
+        private bool _stayLoggedIn;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -22,8 +24,9 @@ namespace WalkieStalky.Droid
             LoadApplication(new App(new Services.Services {LoginService = this, AccountService = this}));
         }
 
-        public void LogIn()
+        public void LogIn(bool stayLoggedIn)
         {
+            _stayLoggedIn = stayLoggedIn;
             var auth = new OAuth2Authenticator(
                 Constants.ClientId,
                 Constants.Scope,
@@ -42,7 +45,7 @@ namespace WalkieStalky.Droid
 
         private void Auth_Completed(object sender, AuthenticatorCompletedEventArgs e)
         {
-            OnLogin?.Invoke(sender, new OnLoginEventArgs { Account = e.Account });
+            OnLogin?.Invoke(sender, new OnLoginEventArgs { Account = e.Account,StayLoggedIn= _stayLoggedIn });
         }
 
         public event OnLoginEvent OnLogin;

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WalkieStalky.Views.TopicsPage"
+             xmlns:local="clr-namespace:WalkieStalky;assembly=WalkieStalky"
+             BindingContext="{x:Static local:App.TopicsViewModel}">
+  
+ <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="LoginButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#2A49A5" />
+        <Setter Property="BorderRadius" Value="3"></Setter>
+        <Setter Property="BorderColor" Value="#082783"></Setter>
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+      </Style>
+      <Style x:Key="TopicEntryStyle" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+      </Style>
+    </ResourceDictionary>
+
+  </ContentPage.Resources> 
+  
+<StackLayout>
+  <ListView
+      ItemsSource="{Binding Topics}"
+      RowHeight="60">
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <AbsoluteLayout VerticalOptions="Fill" BackgroundColor="Olive">
+            <Entry Style="{StaticResource TopicEntryStyle}"
+              Text = "{Binding TopicName}" 
+              FontSize="24" AbsoluteLayout.LayoutBounds="0.25, 0.25, 400, 40"/>
+            
+            <!--<Image Source="{Binding Image}"  AbsoluteLayout.LayoutBounds="250.25, 0.25, 50, 50 "/>-->
+          </AbsoluteLayout>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+  </ListView>
+  
+   <Button Command="{Binding Explore}"
+             CommandParameter="{Binding NavigationService}"
+          Style="{StaticResource LoginButtonStyle}"
+              Text="Explore">
+  </Button>
+
+  
+
+	</StackLayout>
+</ContentPage>
