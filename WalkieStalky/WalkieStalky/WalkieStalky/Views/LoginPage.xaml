@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:WalkieStalky.ViewModels;assembly=WalkieStalky"
-             x:Class="WalkieStalky.Views.LoginPage">
+             x:Class="WalkieStalky.Views.LoginPage"
+             BackgroundColor="#FFB6C1">
   <ContentPage.Resources>
     <ResourceDictionary>
       <Style x:Key="LoginButtonStyle" TargetType="Button">
