@@ -32,7 +32,7 @@ namespace WalkieStalky
         {
             HttpService.SendAuthenticationCredentials(args.Account);
             Services.Services.GetInstance().AccountService.SaveAccount(args.Account, AppName);
-            MainPage=new ContentPage();
+            MainPage=new TopicsPage();
         }
 
         protected override void OnStart()
@@ -40,8 +40,9 @@ namespace WalkieStalky
             var account=Services.Services.GetInstance().AccountService.GetAccountFor(AppName);
             if (account != null)
             {
-                MainPage=new ContentPage();
+                MainPage=new TopicsPage();
             }
+           
         }
 
         protected override void OnSleep()

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:WalkieStalky.ViewModels;assembly=WalkieStalky"
+             x:Class="WalkieStalky.Views.TopicsPage">
+  
+ <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="LoginButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#2A49A5" />
+        <Setter Property="BorderRadius" Value="3"></Setter>
+        <Setter Property="BorderColor" Value="#082783"></Setter>
+        <Setter Property="TextColor" Value="White"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+      </Style>
+    </ResourceDictionary>
+
+  </ContentPage.Resources> 
+  
+<StackLayout>
+    <StackLayout.BindingContext>
+      <viewModels:TopicsViewModel />
+    </StackLayout.BindingContext>
+		<ListView  
+      ItemsSource="{Binding Topics}"
+      RowHeight="60">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<AbsoluteLayout VerticalOptions="Fill" BackgroundColor="Olive">
+							<Label Text = "{Binding Name}" FontSize="24" AbsoluteLayout.LayoutBounds="0.25, 0.25, 400, 40"/>
+							<Label Text = "{Binding Type}" AbsoluteLayout.LayoutBounds="50, 35, 200, 25"/>
+							<Image Source="{Binding Image}"  AbsoluteLayout.LayoutBounds="250.25, 0.25, 50, 50 "/>
+						</AbsoluteLayout>	
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+   <Button Command="{Binding AddTopicCommand}"
+          Style="{StaticResource LoginButtonStyle}"
+              Text="{Binding AddTopicText}">
+  </Button>
+
+  
+
+	</StackLayout>
+</ContentPage>
