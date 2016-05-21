@@ -8,7 +8,9 @@
       <viewModels:RestCallViewModel/>
     </StackLayout.BindingContext>
     
-    <Button Text="Get" Command="{Binding RestCallsCommand}"> </Button>
+    <Button Text="Get" Command="{Binding GetRestCallCommand}"> </Button>
+    <Button Text="Post" Command="{Binding PostRestCallCommand}"></Button>
+
   </StackLayout>
   
 </ContentPage>

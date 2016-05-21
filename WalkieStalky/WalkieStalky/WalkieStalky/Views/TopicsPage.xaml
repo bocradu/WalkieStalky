@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModels="clr-namespace:WalkieStalky.ViewModels;assembly=WalkieStalky"
-             x:Class="WalkieStalky.Views.TopicsPage">
+             x:Class="WalkieStalky.Views.TopicsPage"
+             xmlns:local="clr-namespace:WalkieStalky;assembly=WalkieStalky"
+             BindingContext="{x:Static local:App.TopicsViewModel}">
   
  <ContentPage.Resources>
     <ResourceDictionary>
@@ -15,21 +16,14 @@
       </Style>
       <Style x:Key="TopicEntryStyle" TargetType="Entry">
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="BorderColor" Value="Black"></Setter>
         <Setter Property="TextColor" Value="Black"></Setter>
         <Setter Property="FontSize" Value="12"></Setter>
-        <Setter Property="BorderThi" Value="12"></Setter>
       </Style>
     </ResourceDictionary>
 
   </ContentPage.Resources> 
   
 <StackLayout>
-    <StackLayout.BindingContext>
-      <viewModels:TopicsViewModel />
-    </StackLayout.BindingContext>
-	
-
   <ListView
       ItemsSource="{Binding Topics}"
       RowHeight="60">
@@ -48,9 +42,10 @@
     </ListView.ItemTemplate>
   </ListView>
   
-   <Button Command="{Binding AddTopicCommand}"
+   <Button Command="{Binding Explore}"
+             CommandParameter="{Binding NavigationService}"
           Style="{StaticResource LoginButtonStyle}"
-              Text="{Binding AddTopicText}">
+              Text="Explore">
   </Button>
 
   

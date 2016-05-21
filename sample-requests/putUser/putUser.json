@@ -1,0 +1,14 @@
+{
+  "personId": "0de77c08b76406e9eb6703c0663061e9f3445054d17fc1de490ff4b2da0f8ef7",
+  "name": "Elias Weingaertner",
+  "phonenumber": "+49 179 4969645",
+  "topics": [
+    "Pizza",
+    "Hydraulic Press Channel",
+    "Coffee"
+  ],
+  "coordinates": {
+    "longitude" : 21.2257100,
+    "latitude" : 45.7537200 
+  }
+}

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="WalkieStalky.Droid.WalkieStalky.Droid" android:installLocation="auto" android:versionCode="1" android:versionName="1.0.0.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="WalkieStalky.Droid" android:installLocation="auto" android:versionCode="1" android:versionName="1.0.0.0">
 	<uses-sdk android:minSdkVersion="15" />
 	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -10,6 +10,6 @@
 	<uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.VIBRATE"/>
 	<application>
-		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCDwiRdIfKPKsqss805UTzLXOW6ItNp7Eo" />
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCxnK-ywW0Yvrhezwg3Rx_pM2RoqZGhmP4" />
 	</application>
 </manifest>
