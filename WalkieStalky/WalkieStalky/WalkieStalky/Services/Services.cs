@@ -17,6 +17,12 @@ namespace WalkieStalky.Services
 
         public ILoginService LoginService { get; set; }
         public IAccountService AccountService { get; set; }
+        public IVibrateService VibrateService { get; set; }
+    }
+
+    public interface IVibrateService
+    {
+        void Alert();
     }
 
     public interface IAccountService
