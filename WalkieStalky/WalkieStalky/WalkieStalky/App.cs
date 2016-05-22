@@ -1,4 +1,5 @@
 using System;
+using Org.Json;
 using WalkieStalky.Model;
 using WalkieStalky.Services;
 using WalkieStalky.ViewModels;
@@ -57,7 +58,8 @@ namespace WalkieStalky
                 {
 
                     string json = t.Result.GetResponseText();
-                   // StartNavigationService(model);
+                    var x = new JSONObject(json);
+                    // StartNavigationService(model);
 
                 }
             });
@@ -84,6 +86,7 @@ namespace WalkieStalky
                     {
 
                         string json = t.Result.GetResponseText();
+                        var x=new JSONObject(json);
                       //  StartNavigationService(model);
 
                     }

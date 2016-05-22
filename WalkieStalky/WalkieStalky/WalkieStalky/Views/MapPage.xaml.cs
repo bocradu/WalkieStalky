@@ -141,7 +141,7 @@ namespace WalkieStalky.Views
             }
             if (response.Match != null)
             {
-                await Navigation.PushModalAsync(new MatchPage());
+                await Navigation.PushModalAsync(new MatchPage(response.ma));
             }
 
         }
@@ -195,7 +195,7 @@ namespace WalkieStalky.Views
 
         private async void OnModalClick(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new MatchPage());
+            //await Navigation.PushModalAsync(new MatchPage());
         }
 
         public async void UpdateTopics()
@@ -235,7 +235,7 @@ namespace WalkieStalky.Views
             }
             if (response.Match != null)
             {
-                await Navigation.PushModalAsync(new MatchPage());
+                await Navigation.PushModalAsync(new MatchPage(response.Match));
             }
         }
     }
