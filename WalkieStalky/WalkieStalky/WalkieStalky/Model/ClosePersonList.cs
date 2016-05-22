@@ -21,7 +21,7 @@ namespace WalkieStalky.Model
         /// <param name="ClosePersons">ClosePersons.</param>
         /// <param name="Match">Match.</param>
 
-        public ClosePersonList(List<PersonRecord> ClosePersons = null, BestMatch Match = null)
+        public ClosePersonList(List<PersonRecord> ClosePersons = null, PersonRecord Match = null)
         {
             this.ClosePersons = ClosePersons;
             this.Match = Match;
@@ -38,8 +38,8 @@ namespace WalkieStalky.Model
         /// <summary>
         /// Gets or Sets Match
         /// </summary>
-        [DataMember(Name = "Match", EmitDefaultValue = false)]
-        public BestMatch Match { get; set; }
+        [DataMember(Name = "match", EmitDefaultValue = false)]
+        public PersonRecord Match { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -50,7 +50,7 @@ namespace WalkieStalky.Model
             var sb = new StringBuilder();
             sb.Append("class ClosePersonList {\n");
             sb.Append("  ClosePersons: ").Append(ClosePersons).Append("\n");
-            sb.Append("  Match: ").Append(Match).Append("\n");
+            sb.Append("  match: ").Append(Match).Append("\n");
 
             sb.Append("}\n");
             return sb.ToString();
@@ -83,7 +83,6 @@ namespace WalkieStalky.Model
         /// <returns>Boolean</returns>
         public bool Equals(ClosePersonList other)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
                 return false;
 
@@ -106,7 +105,6 @@ namespace WalkieStalky.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
                 int hash = 41;

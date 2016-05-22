@@ -8,14 +8,14 @@ namespace WalkieStalky.ViewModels
     {
         public RestCallViewModel()
         {
-            PostRestCallCommand = new PostRestCallCommand();
+            PutRestCallCommand = new PutRestCallCommand();
             GetRestCallCommand = new GetRestCallCommand();
         }
-        public ICommand PostRestCallCommand { get; set; }
+        public ICommand PutRestCallCommand { get; set; }
         public ICommand GetRestCallCommand { get; set; }
     }
 
-    public class PostRestCallCommand : ICommand
+    public class PutRestCallCommand : ICommand
     {
         public bool CanExecute(object parameter)
         {
@@ -25,9 +25,10 @@ namespace WalkieStalky.ViewModels
         public async void Execute(object parameter)
         {
 
-            var restModel = parameter as RestCallViewModel;
+           // var restModel = parameter as RestCallViewModel;
             var walkiestalkyclient = new WalkieTalkyClient();
-            walkiestalkyclient.CreatePostRequest();
+            string fakeToken = "0de77c08b76406e9eb6703c0663061e9f3445054d17fc1de490ff4b2da0f8ef7";
+            var personList=  walkiestalkyclient.CreatePutRequest(fakeToken);
 
         }
 
@@ -43,12 +44,10 @@ namespace WalkieStalky.ViewModels
 
         public async void Execute(object parameter)
         {
-            var restModel = parameter as RestCallViewModel;
-            //  var walkiestalkyclient = new mustBedeleted();
+            //var restModel = parameter as RestCallViewModel;
             var walkiestalkyclient = new WalkieTalkyClient();
-            walkiestalkyclient.CreateGetRequest();
-            //await walkiestalkyclient.PutpersonAsync("123", "dad dada da ", new PersonRecord(), new CancellationToken());
-
+            string fakeToken = "iulian";
+            var personRecord= walkiestalkyclient.CreateGetRequest(fakeToken);
         }
 
         public event EventHandler CanExecuteChanged;

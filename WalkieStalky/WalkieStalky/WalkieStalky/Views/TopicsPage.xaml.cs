@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WalkieStalky.ViewModels;
 using System.Windows.Input;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace WalkieStalky.Views
@@ -17,6 +18,7 @@ namespace WalkieStalky.Views
             InitializeComponent();
         }
 
+       
         protected override void OnAppearing()
         {
             base.OnAppearing();

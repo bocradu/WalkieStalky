@@ -17,8 +17,8 @@ namespace WalkieStalky
 
         public App(Services.Services services)
         {
-            services.LoginService.OnLogin += OnLogin;
-            services.LoginService.OnFail += LoginServiceOnOnFail;
+            //services.LoginService.OnLogin += OnLogin;
+            //services.LoginService.OnFail += LoginServiceOnOnFail;
             Services.Services.SetInstance(services);
             HttpService=new HttpService();
             MainPage = new LoginPage();

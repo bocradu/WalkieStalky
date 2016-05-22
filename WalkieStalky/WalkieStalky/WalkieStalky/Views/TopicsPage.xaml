@@ -3,42 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WalkieStalky.Views.TopicsPage"
              xmlns:local="clr-namespace:WalkieStalky;assembly=WalkieStalky"
+             xmlns:abstractions="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
              BindingContext="{x:Static local:App.TopicsViewModel}"
              BackgroundColor="#FFB6C1">
   
  <ContentPage.Resources>
     <ResourceDictionary>
       <Style x:Key="LoginButtonStyle" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#4B0082" />
-        <Setter Property="BorderRadius" Value="0"></Setter>
-        <Setter Property="BorderColor" Value="#082783"></Setter>
-        <Setter Property="TextColor" Value="White"></Setter>
-        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="BackgroundColor" Value="#64B7A8" />
+        <Setter Property="Margin" Value="15"></Setter>
+        <Setter Property="FontFamily" Value="#Quicksand-Regular"></Setter>
+        <Setter Property="FontSize" Value="19"></Setter>
       </Style>
-      <Style x:Key="TopicEntryStyle" TargetType="Entry">
-        <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="Black"></Setter>
-        <Setter Property="FontSize" Value="12"></Setter>
-      </Style>
+      
     </ResourceDictionary>
 
   </ContentPage.Resources> 
   
 <StackLayout>
-  <ListView
-      ItemsSource="{Binding Topics}"
-      RowHeight="60">
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-            <Entry Style="{StaticResource TopicEntryStyle}"
-              Text = "{Binding TopicName}" 
-              FontSize="24" />
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-  </ListView>
-  
+            <ListView ItemsSource="{Binding Topics}" RowHeight="80">
+              <ListView.ItemTemplate>
+                <DataTemplate>
+                  <ViewCell>
+                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="0" Padding="0">
+                    <abstractions:CircleImage Source="{Binding Image}" BorderThickness="2" BorderColor="#B76473" WidthRequest="80" HeightRequest="80" Aspect="AspectFill" Margin="7"/>
+                    <Label Text="{Binding TopicName}" FontSize="30" FontAttributes="Bold" FontFamily="Quicksand-Regular" VerticalTextAlignment="Center"/>
+                     </StackLayout>
+                  </ViewCell>
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+      
    <Button Command="{Binding Explore}"
              CommandParameter="{Binding NavigationService}"
           Style="{StaticResource LoginButtonStyle}"

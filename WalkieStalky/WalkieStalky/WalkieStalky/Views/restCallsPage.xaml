@@ -9,7 +9,7 @@
     </StackLayout.BindingContext>
     
     <Button Text="Get" Command="{Binding GetRestCallCommand}"> </Button>
-    <Button Text="Post" Command="{Binding PostRestCallCommand}"></Button>
+    <Button Text="Post" Command="{Binding PutRestCallCommand}"></Button>
 
   </StackLayout>
   
