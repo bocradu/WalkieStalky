@@ -10,13 +10,15 @@ namespace WalkieStalky.Views
 {
     public class CustomMap:Map
     {
-        public CustomMap()
+       public List<CustomPin> CustomPins { get; set; }
+       public CustomMap()
         {
+            CustomPins=new List<CustomPin>();
             HasScrollEnabled = false;
             HasZoomEnabled = false;
             WidthRequest = 960;
             HeightRequest = 100;
-            IsShowingUser = true;
+            IsShowingUser = false;
             MapType = MapType.Street;
             VerticalOptions = LayoutOptions.FillAndExpand;
         }

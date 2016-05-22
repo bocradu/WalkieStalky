@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomControls\CustomMapRenderer.cs" />
+    <Compile Include="CustomControls\GestureFrameRenderer.cs" />
     <Compile Include="Gestures\CustomGestureListener.cs" />
     <Compile Include="CustomControls\CustomFontLabelRenderer.cs" />
     <Compile Include="MainActivity.cs" />
@@ -214,9 +215,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Style.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\splash.png" />

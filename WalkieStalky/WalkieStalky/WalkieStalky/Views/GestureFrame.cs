@@ -3,6 +3,11 @@ using Xamarin.Forms;
 
 namespace WalkieStalky.Views
 {
+    public class FrameEventArgs : EventArgs
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+    }
 	public class GestureFrame : Frame
 	{
 		public GestureFrame()
@@ -14,8 +19,9 @@ namespace WalkieStalky.Views
 		public event EventHandler SwipeTop;
 		public event EventHandler SwipeLeft;
 		public event EventHandler SwipeRight;
+        public event EventHandler Tap;
 
-		public void OnSwipeDown()
+        public void OnSwipeDown()
 		{
 			if (SwipeDown != null)
 				SwipeDown(this, null);
@@ -38,5 +44,11 @@ namespace WalkieStalky.Views
 			if (SwipeRight != null)
 				SwipeRight(this, null);
 		}
+
+	    public void OnTap()
+	    {
+            if (Tap != null)
+                Tap(this, null);
+        }
 	}
 }

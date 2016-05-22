@@ -21,12 +21,21 @@
 
   </ContentPage.Resources>
   <StackLayout Spacing="0">
-
+    <StackLayout Spacing="0" Orientation="Horizontal">
+      <Button Clicked="Button_OnClicked"
+               Style="{StaticResource LoginButtonStyle}"
+             Text="Center"/>
+      <Button Clicked="OnModalClick"
+             Style="{StaticResource LoginButtonStyle}"
+           Text="ShowModal"/>
+    </StackLayout>
       <Grid HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
           <frame:CustomMap x:Name="TopicsMap">
           </frame:CustomMap>
-      <frame:GestureFrame x:Name="GestureFrame" Opacity="100"></frame:GestureFrame>
+      <!--<frame:GestureFrame x:Name="GestureFrame" Opacity="100">
+       
+      </frame:GestureFrame>-->
     </Grid>
       <Button Command="{Binding TopicsCommand}"
            CommandParameter="{Binding NavigationService}"

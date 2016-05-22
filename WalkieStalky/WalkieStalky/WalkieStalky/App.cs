@@ -21,7 +21,7 @@ namespace WalkieStalky
             services.LoginService.OnFail += LoginServiceOnOnFail;
             Services.Services.SetInstance(services);
             HttpService=new HttpService();
-            MainPage = new MatchPage();
+            MainPage = new LoginPage();
 
         }
 
@@ -50,6 +50,7 @@ namespace WalkieStalky
             var account=Services.Services.GetInstance().AccountService.GetAccountFor(AppName);
             if (account != null)
             {
+                
                 StartNavigationService();
             }
            

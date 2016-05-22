@@ -17,47 +17,68 @@ namespace WalkieStalky.Views
     {
         private double _currentLatitude;
         private double _currentLongitude;
-        private IGeolocator _locator;
         public bool Initialized { get; set; }
 
         public MapPage()
         {
             InitializeComponent();
             Initialized = false;
-            GestureFrame.SwipeDown += (s, e) =>
-            {
-                var initialBearingRadians = 0;
-                MoveTo(initialBearingRadians);
-            };
+            
 
-            GestureFrame.SwipeTop += (s, e) =>
-            {
-                MoveTo(180);
-            };
+            //GestureFrame.SwipeDown += (s, e) =>
+            //{
+            //    var initialBearingRadians = 0;
+            //    MoveLat(initialBearingRadians);
+            //};
 
-            GestureFrame.SwipeLeft += (s, e) =>
-            {
-                MoveTo(90);
-            };
+            //GestureFrame.SwipeTop += (s, e) =>
+            //{
+            //    MoveLat(180);
+            //};
 
-            GestureFrame.SwipeRight += (s, e) =>
-            {
-                MoveTo(270);
-            };
+            //GestureFrame.SwipeLeft += (s, e) =>
+            //{
+            //    MoveLong(90);
+            //};
+
+            //GestureFrame.SwipeRight += (s, e) =>
+            //{
+            //    MoveLong(270);
+            //};
+            //GestureFrame.Tap += (s, e) =>
+            //{
+             
+            //};
+            
 
         }
 
 
-        private void MoveTo(int initialBearingRadians)
+        private void MoveLong(int initialBearingRadians)
         {
             var newLocation =
                 FindPointAtDistanceFrom(
                     new GeoLocation {Latitude = _currentLatitude, Longitude = _currentLongitude},
-                    initialBearingRadians, 1);
-            var mapSpan = MapSpan.FromCenterAndRadius(
-                new Position(newLocation.Latitude, newLocation.Longitude), Distance.FromKilometers(1));
-            _currentLatitude = newLocation.Latitude;
+                    initialBearingRadians, 2);
+           
+           // _currentLatitude = newLocation.Latitude;
             _currentLongitude = newLocation.Longitude;
+            var mapSpan = MapSpan.FromCenterAndRadius(
+               new Position(_currentLatitude, _currentLongitude), Distance.FromKilometers(1));
+            TopicsMap.MoveToRegion(mapSpan);
+        }
+
+        private void MoveLat(int initialBearingRadians)
+        {
+            var newLocation =
+                FindPointAtDistanceFrom(
+                    new GeoLocation { Latitude = _currentLatitude, Longitude = _currentLongitude },
+                    initialBearingRadians,2);
+            
+            _currentLatitude = newLocation.Latitude;
+            //  _currentLongitude = newLocation.Longitude;
+            var mapSpan = MapSpan.FromCenterAndRadius(
+        new Position(_currentLatitude, _currentLongitude), Distance.FromKilometers(1));
             TopicsMap.MoveToRegion(mapSpan);
         }
 
@@ -65,33 +86,36 @@ namespace WalkieStalky.Views
         {
             Initialized = true;
             GetCurrentLocation();
+            TopicsMap.IsShowingUser = true;
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
             NavigationPage.SetHasNavigationBar(this, false);
         }
-        void GetCurrentLocation()
+        async void GetCurrentLocation()
         {
-            _locator = CrossGeolocator.Current;
-            _locator.DesiredAccuracy = 2;
-            _locator.PositionChanged += Locator_PositionChanged;
-            _locator.StartListeningAsync(1, 2);
-           
-        }
-
-        private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
-        {
+            var location =await CrossGeolocator.Current.GetPositionAsync();
             var mapSpan = MapSpan.FromCenterAndRadius(
-               new Position(e.Position.Latitude, e.Position.Longitude), Distance.FromKilometers(1));
-            _currentLatitude = e.Position.Latitude;
-            _currentLongitude = e.Position.Longitude;
+               new Position(location.Latitude, location.Longitude), Distance.FromKilometers(1));
+            _currentLatitude = location.Latitude;
+            _currentLongitude = location.Longitude;
             TopicsMap.MoveToRegion(mapSpan);
-            _locator.PositionChanged -= Locator_PositionChanged;
-            _locator.StopListeningAsync();
+            var item = new Pin
+            {
+                Type = PinType.Generic,
+                Position = new Position(_currentLatitude,_currentLongitude),
+                Label = "Xamarin San Francisco Office",
+                Address = "394 Pacific Ave, San Francisco CA"
+            };
+            TopicsMap.CustomPins.Add(new CustomPin {Pin = item,ImageSource = "tomato.png" });
+            TopicsMap.Pins.Add(item);
+            
 
 
         }
+
+     
 
         public static GeoLocation FindPointAtDistanceFrom(GeoLocation startPoint, double initialBearingRadians, double distanceKilometres)
         {
@@ -130,6 +154,21 @@ namespace WalkieStalky.Views
         {
             const double radToDegFactor = 180 / Math.PI;
             return radians * radToDegFactor;
+        }
+
+        private void OnTapped(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Button_OnClicked(object sender, EventArgs e)
+        {
+            GetCurrentLocation();
+        }
+
+        private async void OnModalClick(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new MatchPage());
         }
     }
 

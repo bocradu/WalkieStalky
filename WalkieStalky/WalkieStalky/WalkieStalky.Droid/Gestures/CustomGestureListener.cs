@@ -1,5 +1,7 @@
 ﻿using Android.Views;
 using System;
+using Android.Runtime;
+using WalkieStalky.Views;
 
 namespace WalkieStalky.Droid
 {
@@ -12,8 +14,16 @@ namespace WalkieStalky.Droid
 		public event EventHandler OnSwipeTop;
 		public event EventHandler OnSwipeLeft;
 		public event EventHandler OnSwipeRight;
+        public event EventHandler OnTap;
+        public override bool OnSingleTapUp(MotionEvent e)
+	    {
+            
+            if (OnTap != null)
+                OnTap(this,null);
+            return base.OnSingleTapUp(e);
+	    }
 
-		public override bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+	    public override bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
 		{
 			Console.WriteLine ("OnFling");
 

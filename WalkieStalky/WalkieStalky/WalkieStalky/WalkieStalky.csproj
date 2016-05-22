@@ -53,6 +53,7 @@
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\RestCallViewModel.cs" />
     <Compile Include="Views\CustomMap.cs" />
+    <Compile Include="Views\CustomPin.cs" />
     <Compile Include="Views\GestureFrame.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

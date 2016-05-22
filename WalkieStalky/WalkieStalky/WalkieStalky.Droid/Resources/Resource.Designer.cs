@@ -2461,20 +2461,17 @@ namespace WalkieStalky.Droid
 			// aapt resource value: 0x7f0200cb
 			public const int mr_ic_play_light = 2130837707;
 			
-			// aapt resource value: 0x7f0200d0
-			public const int notification_template_icon_bg = 2130837712;
+			// aapt resource value: 0x7f0200cf
+			public const int notification_template_icon_bg = 2130837711;
 			
 			// aapt resource value: 0x7f0200cc
 			public const int splash = 2130837708;
 			
 			// aapt resource value: 0x7f0200cd
-			public const int splash_logo = 2130837709;
+			public const int tomato = 2130837709;
 			
 			// aapt resource value: 0x7f0200ce
-			public const int tomato = 2130837710;
-			
-			// aapt resource value: 0x7f0200cf
-			public const int zucchini = 2130837711;
+			public const int zucchini = 2130837710;
 			
 			static Drawable()
 			{
