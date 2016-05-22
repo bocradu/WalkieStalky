@@ -9,8 +9,8 @@ namespace SwaggerServer\lib\Models;
  */
 class ClosePersonList {
     /* @var \SwaggerServer\lib\Models\PersonRecord[] $closePersons  */
-    private $closePersons;
+    public $closePersons;
     /* @var \SwaggerServer\lib\Models\BestMatch $match  */
-    private $match;
+    public $match;
     
 }
