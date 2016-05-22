@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageCircle.Forms.Plugin.Abstractions;
 using WalkieStalky.Model;
+using WalkieStalky.ViewModels;
 using Xamarin.Forms;
 
 namespace WalkieStalky.Views
@@ -14,7 +15,7 @@ namespace WalkieStalky.Views
         public MatchPage(PersonRecord match)
         {
             InitializeComponent();
-
+            BindingContext=new MatchViewModel(match);
         }
 
         protected override void OnAppearing()

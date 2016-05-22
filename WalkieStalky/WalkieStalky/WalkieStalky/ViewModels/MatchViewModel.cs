@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImageCircle.Forms.Plugin.Abstractions;
+using WalkieStalky.Model;
 using Xamarin.Forms;
 
 namespace WalkieStalky.ViewModels
@@ -14,6 +15,11 @@ namespace WalkieStalky.ViewModels
         public ImageSource DummyImage{ get; set; }
         public string DummyTopic { get; set; }
         public string DummyUser { get; set; }
+
+        public MatchViewModel(PersonRecord match):this()
+        {
+            
+        }
         public MatchViewModel()
         {
             DummyImage =
