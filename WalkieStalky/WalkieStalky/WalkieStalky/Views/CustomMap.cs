@@ -18,7 +18,7 @@ namespace WalkieStalky.Views
             HasZoomEnabled = false;
             WidthRequest = 960;
             HeightRequest = 100;
-            IsShowingUser = false;
+            IsShowingUser = true;
             MapType = MapType.Street;
             VerticalOptions = LayoutOptions.FillAndExpand;
         }

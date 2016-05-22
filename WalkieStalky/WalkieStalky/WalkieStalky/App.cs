@@ -1,4 +1,5 @@
 using System;
+using WalkieStalky.Model;
 using WalkieStalky.Services;
 using WalkieStalky.ViewModels;
 using WalkieStalky.Views;
@@ -9,7 +10,7 @@ namespace WalkieStalky
 {
     public class App : Application
     {
-        private const string AppName = "WalkieStalky";
+        public const string AppName = "WalkieStalky";
         public static MapPageViewModel MapPageViewModel { get; set; }
         public static TopicsViewModel TopicsViewModel { get; set; }
         public static MapPage MapPage { get; private set; }
@@ -17,8 +18,8 @@ namespace WalkieStalky
 
         public App(Services.Services services)
         {
-            //services.LoginService.OnLogin += OnLogin;
-            //services.LoginService.OnFail += LoginServiceOnOnFail;
+            services.LoginService.OnLogin += OnLogin;
+            services.LoginService.OnFail += LoginServiceOnOnFail;
             Services.Services.SetInstance(services);
             HttpService=new HttpService();
             MainPage = new LoginPage();
@@ -42,7 +43,9 @@ namespace WalkieStalky
                 Services.Services.GetInstance().AccountService.SaveAccount(args.Account, AppName);
             }
             HttpService.SendAuthenticationCredentials(args.Account);
-            StartNavigationService();
+            var httpClient = new WalkieTalkyClient();
+            var model = httpClient.CreateGetRequest(args.Account.Properties["access_token"]);
+            StartNavigationService(model);
         }
 
         protected override void OnStart()
@@ -50,18 +53,19 @@ namespace WalkieStalky
             var account=Services.Services.GetInstance().AccountService.GetAccountFor(AppName);
             if (account != null)
             {
-                
-                StartNavigationService();
+                var httpClient=new WalkieTalkyClient();
+                var model=httpClient.CreateGetRequest(account.Properties["access_token"]);
+                StartNavigationService(model);
             }
            
         }
 
-        private void StartNavigationService()
+        private void StartNavigationService(PersonRecord model)
         {
             NavigationService navi = new NavigationService();
 
-            TopicsViewModel = new TopicsViewModel(navi);
-            MapPageViewModel = new MapPageViewModel(navi);
+            TopicsViewModel = new TopicsViewModel(navi, model);
+            MapPageViewModel = new MapPageViewModel(navi, model);
 
             TopicsPage = new NavigationPage(new TopicsPage());
             MapPage = new MapPage();

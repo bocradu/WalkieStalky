@@ -20,16 +20,20 @@
     </ResourceDictionary>
 
   </ContentPage.Resources>
-  <StackLayout Spacing="0">
-    <StackLayout Spacing="0" Orientation="Horizontal">
+  <StackLayout Spacing="0" BackgroundColor="#FF8DA1">
+    <!--<StackLayout Spacing="0" Orientation="Horizontal">
       <Button Clicked="Button_OnClicked"
                Style="{StaticResource LoginButtonStyle}"
-             Text="Center"/>
+             Text="Refresh"
+              VerticalOptions="FillAndExpand"/>
       <Button Clicked="OnModalClick"
              Style="{StaticResource LoginButtonStyle}"
-           Text="ShowModal"/>
-    </StackLayout>
-  <StackLayout Spacing="0" BackgroundColor="#FF8DA1">
+           Text="ShowModal"
+              VerticalOptions="FillAndExpand"/>
+    </StackLayout>-->
+    <Button Clicked="Button_OnClicked"
+                 Style="{StaticResource LoginButtonStyle}"
+               Text="Refresh"/>
 
       <Grid HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">

@@ -23,28 +23,14 @@ namespace WalkieStalky.Services
 
 
         // .header("Content-Type", "application/json")
-        public ClosePersonList CreatePutRequest(string token)
+        public ClosePersonList CreatePutRequest(string personId,PersonRecord personToUpdate,string fbToken)
         {
-            string url = String.Concat(URLSERVER, token + "?authtoken=0de77c08b76406e9eb6703c0663061e9f3445054d17fc1de490ff4b2da0f8ef7");
-            //string url = String.Concat(@"http://httpbin.org/put");
+            string url = String.Concat(URLSERVER, personId + "?authtoken="+ fbToken);
 
-
-
-            var dummyPerson = GetDummyPersonRecord();
             HttpResponse<string> jsonResponse = Unirest.put(url)
                  .header("Content-Type", "application/json")
-             .body(dummyPerson.ToJson())
+             .body(personToUpdate.ToJson())
                 .asString();
-
-            //JsonValue rss = JsonObject.Parse(jsonResponse.Body);
-
-            //string rssTitle = (string)rss["match"];
-       
-            //var j = JArray.Parse(jsonResponse.Body);
-            //var closePersonsList = JsonConvert.DeserializeObject<ClosePersonList>(j[1].ToString());
-            //var match = JsonConvert.DeserializeObject<List<BestMatch>>(j[2].ToString());
-
-            //var match = JsonConvert.DeserializeObject<BestMatch>(jsonResponse.Body);
 
             var closePersonsList = JsonConvert.DeserializeObject<ClosePersonList>(jsonResponse.Body);
 

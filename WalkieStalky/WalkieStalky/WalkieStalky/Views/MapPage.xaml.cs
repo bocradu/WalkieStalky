@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using WalkieStalky.Model;
+using WalkieStalky.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Position = Xamarin.Forms.Maps.Position;
@@ -86,8 +88,9 @@ namespace WalkieStalky.Views
         {
             Initialized = true;
             GetCurrentLocation();
-            TopicsMap.IsShowingUser = true;
+           
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -101,17 +104,42 @@ namespace WalkieStalky.Views
             _currentLatitude = location.Latitude;
             _currentLongitude = location.Longitude;
             TopicsMap.MoveToRegion(mapSpan);
-            var item = new Pin
-            {
-                Type = PinType.Generic,
-                Position = new Position(_currentLatitude,_currentLongitude),
-                Label = "Xamarin San Francisco Office",
-                Address = "394 Pacific Ave, San Francisco CA"
-            };
-            TopicsMap.CustomPins.Add(new CustomPin {Pin = item,ImageSource = "tomato.png" });
-            TopicsMap.Pins.Add(item);
             
 
+            App.MapPageViewModel.TopicsViewModel.Model.Topics =
+               new List<string>(
+                   App.MapPageViewModel.TopicsViewModel.Topics.Where(e => !string.IsNullOrEmpty(e.TopicName))
+                       .Select(e => e.TopicName));
+            App.MapPageViewModel.TopicsViewModel.Model.Coordinates = new GeoCoordinates
+            {
+                Latitude = _currentLatitude,
+                Longitude = _currentLongitude
+            };
+            WalkieTalkyClient client = new WalkieTalkyClient();
+            var token =
+                Services.Services.GetInstance().AccountService.GetAccountFor(App.AppName).Properties["access_token"];
+            var response=client.CreatePutRequest(App.MapPageViewModel.TopicsViewModel.Model.PersonId,
+                App.MapPageViewModel.TopicsViewModel.Model, token);
+            foreach (PersonRecord personRecord in response.ClosePersons)
+            {
+                if (personRecord.Coordinates.Latitude == null || personRecord.Coordinates.Longitude == null)
+                {
+                    continue;
+                }
+                var item = new Pin
+                {
+                    Type = PinType.Generic,
+                    Position = new Position(personRecord.Coordinates.Latitude.Value, personRecord.Coordinates.Longitude.Value),
+                    Label = personRecord.Name,
+                    Address = personRecord.Phonenumber
+                };
+                TopicsMap.CustomPins.Add(new CustomPin { Pin = item});
+                TopicsMap.Pins.Add(item);
+            }
+            if (response.Match != null)
+            {
+                await Navigation.PushModalAsync(new MatchPage());
+            }
 
         }
 
@@ -156,10 +184,6 @@ namespace WalkieStalky.Views
             return radians * radToDegFactor;
         }
 
-        private void OnTapped(object sender, EventArgs e)
-        {
-            
-        }
 
         private void Button_OnClicked(object sender, EventArgs e)
         {
