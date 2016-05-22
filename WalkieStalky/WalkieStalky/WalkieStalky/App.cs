@@ -34,7 +34,7 @@ namespace WalkieStalky
 
         private void OnLogin(object sender, OnLoginEventArgs args)
         {
-            if(args.Account==null)
+            if (args.Account == null)
             {
                 return;
             }
@@ -45,6 +45,23 @@ namespace WalkieStalky
             HttpService.SendAuthenticationCredentials(args.Account);
             var httpClient = new WalkieTalkyClient();
             var model = httpClient.CreateGetRequest(args.Account.Properties["access_token"]);
+            var request = new OAuth2Request("GET", new Uri("https://graph.facebook.com/me"), null, args.Account);
+            request.GetResponseAsync().ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                {
+
+                }
+
+                else
+                {
+
+                    string json = t.Result.GetResponseText();
+                   // StartNavigationService(model);
+
+                }
+            });
+
             StartNavigationService(model);
         }
 
@@ -55,6 +72,23 @@ namespace WalkieStalky
             {
                 var httpClient=new WalkieTalkyClient();
                 var model=httpClient.CreateGetRequest(account.Properties["access_token"]);
+                var request = new OAuth2Request("GET", new Uri("https://graph.facebook.com/me"), null, account);
+                request.GetResponseAsync().ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+
+                    }
+
+                    else
+                    {
+
+                        string json = t.Result.GetResponseText();
+                      //  StartNavigationService(model);
+
+                    }
+                });
+
                 StartNavigationService(model);
             }
            

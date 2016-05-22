@@ -82,6 +82,10 @@ namespace WalkieStalky.ViewModels
                 {
                     App.MapPage.Initialize();
                 }
+                else
+                {
+                    App.MapPage.UpdateTopics();
+                }
                 await navi.NavigationService.PushAsync(App.MapPage);
             }
         }

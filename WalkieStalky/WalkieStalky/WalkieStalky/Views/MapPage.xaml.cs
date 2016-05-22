@@ -96,20 +96,21 @@ namespace WalkieStalky.Views
             base.OnAppearing();
             NavigationPage.SetHasNavigationBar(this, false);
         }
+
         async void GetCurrentLocation()
         {
-            var location =await CrossGeolocator.Current.GetPositionAsync();
+            var location = await CrossGeolocator.Current.GetPositionAsync();
             var mapSpan = MapSpan.FromCenterAndRadius(
-               new Position(location.Latitude, location.Longitude), Distance.FromKilometers(1));
+                new Position(location.Latitude, location.Longitude), Distance.FromKilometers(1));
             _currentLatitude = location.Latitude;
             _currentLongitude = location.Longitude;
             TopicsMap.MoveToRegion(mapSpan);
-            
+
 
             App.MapPageViewModel.TopicsViewModel.Model.Topics =
-               new List<string>(
-                   App.MapPageViewModel.TopicsViewModel.Topics.Where(e => !string.IsNullOrEmpty(e.TopicName))
-                       .Select(e => e.TopicName));
+                new List<string>(
+                    App.MapPageViewModel.TopicsViewModel.Topics.Where(e => !string.IsNullOrEmpty(e.TopicName))
+                        .Select(e => e.TopicName));
             App.MapPageViewModel.TopicsViewModel.Model.Coordinates = new GeoCoordinates
             {
                 Latitude = _currentLatitude,
@@ -118,22 +119,24 @@ namespace WalkieStalky.Views
             WalkieTalkyClient client = new WalkieTalkyClient();
             var token =
                 Services.Services.GetInstance().AccountService.GetAccountFor(App.AppName).Properties["access_token"];
-            var response=client.CreatePutRequest(App.MapPageViewModel.TopicsViewModel.Model.PersonId,
+            var response = client.CreatePutRequest(App.MapPageViewModel.TopicsViewModel.Model.PersonId,
                 App.MapPageViewModel.TopicsViewModel.Model, token);
             foreach (PersonRecord personRecord in response.ClosePersons)
             {
-                if (personRecord.Coordinates.Latitude == null || personRecord.Coordinates.Longitude == null)
+                if (personRecord.Coordinates.Latitude == null || personRecord.Coordinates.Longitude == null ||
+                    string.IsNullOrEmpty(personRecord.Name))
                 {
                     continue;
                 }
                 var item = new Pin
                 {
                     Type = PinType.Generic,
-                    Position = new Position(personRecord.Coordinates.Latitude.Value, personRecord.Coordinates.Longitude.Value),
+                    Position =
+                        new Position(personRecord.Coordinates.Latitude.Value, personRecord.Coordinates.Longitude.Value),
                     Label = personRecord.Name,
                     Address = personRecord.Phonenumber
                 };
-                TopicsMap.CustomPins.Add(new CustomPin { Pin = item});
+                TopicsMap.CustomPins.Add(new CustomPin {Pin = item});
                 TopicsMap.Pins.Add(item);
             }
             if (response.Match != null)
@@ -143,7 +146,7 @@ namespace WalkieStalky.Views
 
         }
 
-     
+
 
         public static GeoLocation FindPointAtDistanceFrom(GeoLocation startPoint, double initialBearingRadians, double distanceKilometres)
         {
@@ -193,6 +196,47 @@ namespace WalkieStalky.Views
         private async void OnModalClick(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new MatchPage());
+        }
+
+        public async void UpdateTopics()
+        {
+            var location = await CrossGeolocator.Current.GetPositionAsync();
+            _currentLatitude = location.Latitude;
+            _currentLongitude = location.Longitude;
+            App.MapPageViewModel.TopicsViewModel.Model.Topics =
+               new List<string>(
+                   App.MapPageViewModel.TopicsViewModel.Topics.Where(e => !string.IsNullOrEmpty(e.TopicName))
+                       .Select(e => e.TopicName));
+            App.MapPageViewModel.TopicsViewModel.Model.Coordinates = new GeoCoordinates
+            {
+                Latitude = _currentLatitude,
+                Longitude = _currentLongitude
+            };
+            WalkieTalkyClient client = new WalkieTalkyClient();
+            var token =
+                Services.Services.GetInstance().AccountService.GetAccountFor(App.AppName).Properties["access_token"];
+            var response = client.CreatePutRequest(App.MapPageViewModel.TopicsViewModel.Model.PersonId,
+                App.MapPageViewModel.TopicsViewModel.Model, token);
+            foreach (PersonRecord personRecord in response.ClosePersons)
+            {
+                if (personRecord.Coordinates.Latitude == null || personRecord.Coordinates.Longitude == null)
+                {
+                    continue;
+                }
+                var item = new Pin
+                {
+                    Type = PinType.Generic,
+                    Position = new Position(personRecord.Coordinates.Latitude.Value, personRecord.Coordinates.Longitude.Value),
+                    Label = personRecord.Name,
+                    Address = personRecord.Phonenumber
+                };
+                TopicsMap.CustomPins.Add(new CustomPin { Pin = item });
+                TopicsMap.Pins.Add(item);
+            }
+            if (response.Match != null)
+            {
+                await Navigation.PushModalAsync(new MatchPage());
+            }
         }
     }
 
