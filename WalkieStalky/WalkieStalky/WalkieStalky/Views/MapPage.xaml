@@ -10,17 +10,17 @@
   <ContentPage.Resources>
     <ResourceDictionary>
       <Style x:Key="LoginButtonStyle" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#4B0082" />
-        <Setter Property="BorderRadius" Value="0"></Setter>
-        <Setter Property="BorderColor" Value="#082783"></Setter>
+        <Setter Property="BackgroundColor" Value="#64B7A8" />
+        <Setter Property="Margin" Value="15"></Setter>
         <Setter Property="TextColor" Value="White"></Setter>
-        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="FontFamily" Value="Quicksand-Regular"></Setter>
+        <Setter Property="FontSize" Value="19"></Setter>
       </Style>
 
     </ResourceDictionary>
 
   </ContentPage.Resources>
-  <StackLayout Spacing="0">
+  <StackLayout Spacing="0" BackgroundColor="#FF8DA1">
 
       <Grid HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">

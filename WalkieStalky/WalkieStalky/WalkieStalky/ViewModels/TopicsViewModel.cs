@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ImageCircle.Forms.Plugin.Abstractions;
 using WalkieStalky.Views;
 using Xamarin.Forms;
 
@@ -23,23 +24,23 @@ namespace WalkieStalky.ViewModels
         public TopicsViewModel(NavigationService navi)
         {
             NavigationService = navi;
+
             Topics = new ObservableCollection<Topic>(); 
-            Topics.Add(new Topic { TopicName = "Tomato", Type = "Fruit", Image = "tomato.png" });
-            Topics.Add(new Topic { TopicName = "Romaine Lettuce", Type = "Vegetable", Image = "lettuce.png" });
-            Topics.Add(new Topic { TopicName = "Zucchini", Type = "Vegetable", Image = "zucchini.png" });
+            Topics.Add(new Topic { TopicName = "Tomato", Image = "tomato.png" });
+            Topics.Add(new Topic { TopicName = "Romaine Lettuce", Image = "lettuce.png" });
+            Topics.Add(new Topic { TopicName = "Zucchini", Image = "zucchini.png" });
 
             Explore = new ExploreCommand();
-
-           
         }
 
     }
+
+   
 
     public class Topic
     {
         public string Image { get;  set; }
         public string TopicName { get;  set; }
-        public string Type { get;  set; }
     }
 
     internal class ExploreCommand : ICommand
