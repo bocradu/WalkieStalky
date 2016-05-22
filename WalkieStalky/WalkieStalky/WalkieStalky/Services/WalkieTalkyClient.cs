@@ -1,45 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text;
+using System.Json;
 using Newtonsoft.Json;
 using unirest_net.http;
-using unirest_net.request;
 using WalkieStalky.Model;
 
 namespace WalkieStalky.Services
 {
-    public class raduboc
-    {
-        public string personId { get; set; }
-    }
     public class WalkieTalkyClient
     {
-        private const string URLSERVER = "https://walkiestalky.verspult.com/test";
-        public PersonRecord CreateGetRequest()
+        private const string URLSERVER = "https://walkiestalky.verspult.com/persons/";
+        public PersonRecord CreateGetRequest(string token)
         {
-            HttpResponse<string> jsonResponse = Unirest.get("http://pastebin.com/raw/45SvuMGc")
-                .header("accept", "application/json").asString();
+            string url = String.Concat(URLSERVER, "id?authtoken=" + token);
+            HttpResponse<string> jsonResponse = Unirest.get(url)
+                .header("accept", "application/json")
+                .asString();
             var personRecord = JsonConvert.DeserializeObject<PersonRecord>(jsonResponse.Body);
 
             return personRecord;
         }
 
-      
-        public ClosePersonList CreatePostRequest()
+
+        // .header("Content-Type", "application/json")
+        public ClosePersonList CreatePutRequest(string token)
         {
+            string url = String.Concat(URLSERVER, token + "?authtoken=0de77c08b76406e9eb6703c0663061e9f3445054d17fc1de490ff4b2da0f8ef7");
+            //string url = String.Concat(@"http://httpbin.org/put");
+
+
 
             var dummyPerson = GetDummyPersonRecord();
-            HttpResponse < string > jsonResponse = Unirest.put(URLSERVER)
-                 .header("accept", "application/json")
-                .field("personid", dummyPerson.PersonId)
-                .field("authtoken", "dummyTokenUntilfacebookToken")
-                .field("personrecord", dummyPerson)
+            HttpResponse<string> jsonResponse = Unirest.put(url)
+                 .header("Content-Type", "application/json")
+             .body(dummyPerson.ToJson())
                 .asString();
 
+            //JsonValue rss = JsonObject.Parse(jsonResponse.Body);
+
+            //string rssTitle = (string)rss["match"];
+       
+            //var j = JArray.Parse(jsonResponse.Body);
+            //var closePersonsList = JsonConvert.DeserializeObject<ClosePersonList>(j[1].ToString());
+            //var match = JsonConvert.DeserializeObject<List<BestMatch>>(j[2].ToString());
+
+            //var match = JsonConvert.DeserializeObject<BestMatch>(jsonResponse.Body);
+
             var closePersonsList = JsonConvert.DeserializeObject<ClosePersonList>(jsonResponse.Body);
+
 
             return closePersonsList;
         }
@@ -49,24 +57,25 @@ namespace WalkieStalky.Services
             PersonRecord dummyPersonRecordPerson = new PersonRecord
             {
                 Name = "Elias Weingaertner",
+                PersonId = "0de77c08b76406e9eb6703c0663061e9f3445054d17fc1de490ff4b2da0f8ef7",
                 Phonenumber = "+49 179 4969645",
                 Coordinates = new GeoCoordinates
                 {
-                    Longitude = 45.7537200,
-                    Latitude = 21.2257100
+                    Longitude = 21.2257100,
+                    Latitude = 45.7537200
                 },
                 Topics = new List<string>
                 {
-                    "Pizza",
-                    "PHP",
-                    "Romania"
+                     "Pizza",
+    "Hydraulic Press Channel",
+    "Coffee"
                 }
             };
 
             return dummyPersonRecordPerson;
 
         }
-        
+
     }
 
     //    {
