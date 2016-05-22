@@ -12,10 +12,10 @@ namespace WalkieStalky.Views
 {
     public partial class MatchPage : ContentPage
     {
-        public MatchPage(PersonRecord match)
+        public MatchPage(PersonRecord match, string matchedTopicName)
         {
             InitializeComponent();
-            BindingContext=new MatchViewModel(match);
+            BindingContext=new MatchViewModel(match, matchedTopicName);
         }
 
         protected override void OnAppearing()

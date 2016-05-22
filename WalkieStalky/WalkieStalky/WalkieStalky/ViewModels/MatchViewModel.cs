@@ -16,7 +16,7 @@ namespace WalkieStalky.ViewModels
         public string DummyTopic { get; set; }
         public string DummyUser { get; set; }
 
-        public MatchViewModel(PersonRecord match):this()
+        public MatchViewModel(PersonRecord match, string matchedTopicName):this()
         {
             
         }

@@ -9,6 +9,7 @@ using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using WalkieStalky.Model;
 using WalkieStalky.Services;
+using WalkieStalky.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Position = Xamarin.Forms.Maps.Position;
@@ -141,7 +142,18 @@ namespace WalkieStalky.Views
             }
             if (response.Match != null)
             {
-                await Navigation.PushModalAsync(new MatchPage(response.Match));
+                string matchedTopicName=string.Empty;
+                foreach (Topic topic in App.TopicsViewModel.Topics)
+                {
+                    foreach (string topicName in response.Match.Topics)
+                    {
+                        if (topicName.ToUpper().Equals(topic.TopicName.ToUpper()))
+                        {
+                            matchedTopicName = topicName;
+                        }
+                    }
+                }
+                await Navigation.PushModalAsync(new MatchPage(response.Match, matchedTopicName));
             }
 
         }
@@ -235,7 +247,18 @@ namespace WalkieStalky.Views
             }
             if (response.Match != null)
             {
-                await Navigation.PushModalAsync(new MatchPage(response.Match));
+                string matchedTopicName = string.Empty;
+                foreach (Topic topic in App.TopicsViewModel.Topics)
+                {
+                    foreach (string topicName in response.Match.Topics)
+                    {
+                        if (topicName.ToUpper().Equals(topic.TopicName.ToUpper()))
+                        {
+                            matchedTopicName = topicName;
+                        }
+                    }
+                }
+                await Navigation.PushModalAsync(new MatchPage(response.Match, matchedTopicName));
             }
         }
     }
