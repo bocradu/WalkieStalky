@@ -141,7 +141,7 @@ namespace WalkieStalky.Views
             }
             if (response.Match != null)
             {
-                await Navigation.PushModalAsync(new MatchPage(response.ma));
+                await Navigation.PushModalAsync(new MatchPage(response.Match));
             }
 
         }
